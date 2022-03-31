@@ -1,12 +1,12 @@
-var loc = window.location.href;
-var url = new URL(loc);
-var idProduct = url.searchParams.get("id");
-console.log(idProduct); //Show Id of the product
-var product = "";
+let loc = window.location.href;
+let url = new URL(loc);
+let idProduct = url.searchParams.get("id");
+let product = "";
+
 //Color choice
-var colorChoice = document.querySelector('#colors');
+let colorChoice = document.querySelector('#colors');
 //Quantity choice
-var productQuantity = document.querySelector('#quantity');
+let productChoice = document.querySelector('#quantity');
 
 getProduct();
 
@@ -19,7 +19,6 @@ function getProduct() {
 
         .then(function (returnAPI) {
             product = returnAPI;
-            console.table(product);
             if (product) {
                 getPost(product);
             }
@@ -32,24 +31,23 @@ function getProduct() {
 //Function Creation de la carte article
 function getPost(product) {
     //Insert Image
-    var productImg = document.createElement("img");
+    let productImg = document.createElement("img");
     document.querySelector(".item__img").appendChild(productImg);
     productImg.src = product.imageUrl;
     productImg.alt = product.altTxt;
 
     //Change H1
-    var productName = document.getElementById("title").innerHTML = product.name;
+    let productName = document.getElementById("title").innerHTML = product.name;
 
     //Change Price
-    var productPrice = document.getElementById('price').innerHTML = product.price;
+    let productPrice = document.getElementById('price').innerHTML = product.price;
 
     //Change Descritpion
-    var productDescription = document.getElementById('description').innerHTML = product.description;
+    let productDescription = document.getElementById('description').innerHTML = product.description;
 
     //Color List
-    for (var colors of product.colors) {
-        console.table(colors);
-        var productColors = document.createElement("option");
+    for (let colors of product.colors) {
+        let productColors = document.createElement("option");
         document.querySelector("#colors").appendChild(productColors);
         productColors.value = colors;
         productColors.innerHTML = colors;
@@ -58,30 +56,39 @@ function getPost(product) {
     addToCart(product);
 }
 
-// //Function ajout dans le panier
-// function addToCart(product) {
-//     const btn_addToCart = document.querySelector('#addToCart');
+//Function ajout dans le panier
+function addToCart(product) {
+    const btn_addToCart = document.querySelector('#addToCart');
 
-//     //Add Listener on Btn AddToCart
-//     btn_addToCart.addEventListener("click", (event) => {
-//         if (quantityPicked.value > 0 && quantityPicked.value <= 100 && quantityPicked.value != 0) {
+    //Add Listener on Btn AddToCart
+    btn_addToCart.addEventListener("click", (event) => {
+        //Waiting to have at least 1 and between 0 to 100 object choose and color choose too
+        if (productChoice.value != 0 && productChoice.value <= 100) {
 
-//             let colorChoice = colorPicked.value;
-//             let productQuantity = quantityPicked.value;
+            let colorValue = colorChoice.value;
+            let productQuantity = productChoice.value;
 
-//             let infoProduct = {
-//                 idProduit: idProduct,
-//                 couleurProduit: colorChoice,
-//                 quantiteProduit: Number(productQuantity),
-//                 nomProduit: article.name,
-//                 prixProduit: article.price,
-//                 imgProduit: article.imageUrl
-//             };
+            let infoProduct = {
+                idProduit: idProduct,
+                couleurProduit: colorValue,
+                quantiteProduit: Number(productQuantity),
+                nomProduit: product.name,
+                prixProduit: product.price,
+                imgProduit: product.imageUrl
+            };
 
+            //Init the Local Storage
+            let productStorage = JSON.parse(localStorage.getItem("product"));
 
-//         }
-//     })
-// }
-//recuperation du choix de couleur
+            //check if there is already an item in the cart
+            // if (productStorage) {
+            //     let productIn = productStorage.find(
+            //         if (productIn) {
 
-//Recuperation du choix du nombre entre 1 et 100
+            //         }
+            //     )
+            // }
+
+        }
+    })
+}

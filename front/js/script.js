@@ -8,7 +8,7 @@ function listProduit() {
 
 //Creating and filling Card product
 function fillCards() {
-    var result = listProduit()
+    let result = listProduit()
         .then(function (returnAPI) {
             const products = returnAPI;
             console.table(products);
