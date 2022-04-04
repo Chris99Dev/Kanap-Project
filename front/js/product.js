@@ -56,14 +56,12 @@ function fillInfo(product) {
     addToCart(product);
 }
 
-
 //Pop Message Addding to the Cart
 const confirmationMessage = () => {
     if (window.confirm(`Votre commande de ${Number(productChoice.value)} ${product.name} ${colorChoice.value} est ajoutée au panier. Voir le Panier, cliquez sur OK`)) {
         window.location.href = "cart.html";
     }
 }
-
 
 //Function add on the Cart
 function addToCart(product) {
@@ -100,19 +98,16 @@ function addToCart(product) {
                     let addedQuantity = parseInt(infoProduct.quantiteProduit) + parseInt(objectFind.quantiteProduit);
                     objectFind.quantiteProduit = addedQuantity;
                     localStorage.setItem("product", JSON.stringify(productStorage));
-                    console.table(productStorage);
                     confirmationMessage();
                 } else {
                     productStorage.push(infoProduct);
                     localStorage.setItem("product", JSON.stringify(productStorage));
-                    console.log("added");
                     confirmationMessage();
                 }
             } else { //if it doesn't exit create item on array
                 productStorage = [];
                 productStorage.push(infoProduct);
                 localStorage.setItem("product", JSON.stringify(productStorage));
-                console.log("added");
                 confirmationMessage();
             }
         }
