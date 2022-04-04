@@ -20,7 +20,7 @@ function getProduct() {
         .then(function (returnAPI) {
             product = returnAPI;
             if (product) {
-                getPost(product);
+                fillInfo(product);
             }
         })
         .catch((error) => {
@@ -29,7 +29,7 @@ function getProduct() {
 }
 
 //Function Creation de la carte article
-function getPost(product) {
+function fillInfo(product) {
     //Insert Image
     let productImg = document.createElement("img");
     document.querySelector(".item__img").appendChild(productImg);
@@ -56,7 +56,7 @@ function getPost(product) {
     addToCart(product);
 }
 
-//Function ajout dans le panier
+//Function add on the Cart
 function addToCart(product) {
     const btn_addToCart = document.querySelector('#addToCart');
 
@@ -80,14 +80,24 @@ function addToCart(product) {
             //Init the Local Storage
             let productStorage = JSON.parse(localStorage.getItem("product"));
 
-            //check if there is already an item in the cart
-            // if (productStorage) {
-            //     let productIn = productStorage.find(
-            //         if (productIn) {
+            if (productStorage) {
+                const objectFind = productStorage.find(
+                    productElement => productElement.idProduit === idProduct && productElement.couleurProduit === colorValue);
 
-            //         }
-            //     )
-            // }
+                if (objectFind) {
+
+                    console.table(productStorage);
+                } else {
+                    productStorage.push(infoProduct);
+                    localStorage.setItem("product", JSON.stringify(productStorage));
+                    console.log("added");
+                }
+            } else {
+                productStorage = [];
+                productStorage.push(infoProduct);
+                localStorage.setItem("product", JSON.stringify(productStorage));
+                console.log("added");
+            }
 
         }
     })
