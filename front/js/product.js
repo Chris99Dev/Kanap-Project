@@ -56,6 +56,15 @@ function fillInfo(product) {
     addToCart(product);
 }
 
+
+//Pop Message Addding to the Cart
+const confirmationMessage = () => {
+    if (window.confirm(`Votre commande de ${Number(productChoice.value)} ${product.name} ${colorChoice.value} est ajoutée au panier. Voir le Panier, cliquez sur OK`)) {
+        window.location.href = "cart.html";
+    }
+}
+
+
 //Function add on the Cart
 function addToCart(product) {
     const btn_addToCart = document.querySelector('#addToCart');
@@ -80,25 +89,32 @@ function addToCart(product) {
             //Init the Local Storage
             let productStorage = JSON.parse(localStorage.getItem("product"));
 
+            //Checking if Product already exist
             if (productStorage) {
+                //Checking if product exist by ID and Color
                 const objectFind = productStorage.find(
                     productElement => productElement.idProduit === idProduct && productElement.couleurProduit === colorValue);
 
+                //If Product exist by Id and Color change Quantity
                 if (objectFind) {
-
+                    let addedQuantity = parseInt(infoProduct.quantiteProduit) + parseInt(objectFind.quantiteProduit);
+                    objectFind.quantiteProduit = addedQuantity;
+                    localStorage.setItem("product", JSON.stringify(productStorage));
                     console.table(productStorage);
+                    confirmationMessage();
                 } else {
                     productStorage.push(infoProduct);
                     localStorage.setItem("product", JSON.stringify(productStorage));
                     console.log("added");
+                    confirmationMessage();
                 }
-            } else {
+            } else { //if it doesn't exit create item on array
                 productStorage = [];
                 productStorage.push(infoProduct);
                 localStorage.setItem("product", JSON.stringify(productStorage));
                 console.log("added");
+                confirmationMessage();
             }
-
         }
     })
 }
