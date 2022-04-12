@@ -13,29 +13,76 @@ function checkCart() {
             let productArticle = document.createElement("product");
             document.querySelector("#cart__items").appendChild(productArticle);
 
-            // <article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
-            //     <div class="cart__item__img">
-            //       <img src="../images/product01.jpg" alt="Photographie d'un canapé">
-            //     </div>
-            //     <div class="cart__item__content">
-            //       <div class="cart__item__content__description">
-            //         <h2>Nom du produit</h2>
-            //         <p>Vert</p>
-            //         <p>42,00 €</p>
-            //       </div>
-            //       <div class="cart__item__content__settings">
-            //         <div class="cart__item__content__settings__quantity">
-            //           <p>Qté : </p>
-            //           <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
-            //         </div>
-            //         <div class="cart__item__content__settings__delete">
-            //           <p class="deleteItem">Supprimer</p>
-            //         </div>
-            //       </div>
-            //     </div>
-            //   </article>
+            //Filling Cart product object
+            productArticle.innerHTML = `
+            <article class="cart__item" data-id="${productStorage[product].idProduit}" data-color="${productStorage[product].couleurProduit}">
+                <div class="cart__item__img">
+                    <img src="${productStorage[product].imgProduit}" alt="${productStorage[product].altTxtProduit}">
+                </div>
+                <div class="cart__item__content">
+                    <div class="cart__item__content__description">
+                        <h2>${productStorage[product].nomProduit}</h2>
+                        <p>${productStorage[product].couleurProduit}</p>
+                        <p>${productStorage[product].prixProduit} €</p>
+                    </div>
+                    <div class="cart__item__content__settings">
+                        <div class="cart__item__content__settings__quantity">
+                            <p>Qté : </p>
+                            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${productStorage[product].quantiteProduit}">
+                        </div>
+                        <div class="cart__item__content__settings__delete">
+                            <p class="deleteItem">Supprimer</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            `
         }
     }
 }
-
 checkCart();
+
+//Edit Quantity for Product
+function modifyQuantity() {
+    let quantityItem = document.querySelectorAll(".itemQuantity");
+
+    for (let i = 0; i < quantityItem.length; i++) {
+        quantityItem[i].addEventListener("change", (event) => {
+
+            let quantity = productStorage[i].quantiteProduit;
+            let quantityItemValue = quantityItem.valueAsNumber;
+
+
+        })
+
+    }
+}
+
+//Get Total for Quantity and Price
+function allTotals() {
+    //get Quantity
+    let quantite = document.getElementsByClassName('itemQuantity');
+    let quantiteLength = quantite.length;
+    totalQuantite = 0;
+
+    //Calcul Total Quantity
+    for (let i = 0; i < quantiteLength; i++) {
+        totalQuantite += quantite[i].valueAsNumber;
+    }
+    //show Total Quantity Product
+    document.getElementById('totalQuantity').innerHTML = totalQuantite;
+
+    //Total Price
+    totalPrice = 0;
+
+    //Calcul Total Porducts Price
+    for (let i = 0; i < quantiteLength; i++) {
+        totalPrice += (quantite[i].valueAsNumber * productStorage[i].prixProduit);
+    }
+
+    //Show Total Price
+    document.getElementById('totalPrice').innerHTML = totalPrice;
+}
+allTotals();
+
+

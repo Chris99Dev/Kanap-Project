@@ -81,7 +81,8 @@ function addToCart(product) {
                 quantiteProduit: Number(productQuantity),
                 nomProduit: product.name,
                 prixProduit: product.price,
-                imgProduit: product.imageUrl
+                imgProduit: product.imageUrl,
+                altTxtProduit: product.altTxt
             };
 
             //Init the Local Storage
