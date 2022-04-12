@@ -86,3 +86,27 @@ function allTotals() {
 allTotals();
 
 
+//modify quantity
+function modifyQuantity() {
+    let modifQuantity = document.querySelectorAll(".itemQuantity");
+
+    for (let i = 0; i < modifQuantity.length; i++) {
+        modifQuantity[i].addEventListener("change", (event) => {
+            event.preventDefault();
+
+            let productModif = productStorage[i].quantiteProduit;
+            let modifQuantityValue = modifQuantity[i].valueAsNumber;
+
+            const result = productStorage.find((el) => el.modifQuantityValue !== productModif);
+
+            result.quantiteProduit = modifQuantityValue;
+            productStorage[i].quantiteProduit = result.quantiteProduit;
+
+            localStorage.setItem("product", JSON.stringify(productStorage));
+
+            //refresh Url
+            location.reload();
+        })
+    }
+}
+modifyQuantity();
