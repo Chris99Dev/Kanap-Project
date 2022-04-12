@@ -134,3 +134,69 @@ function deleteProduct() {
     }
 }
 deleteProduct();
+
+
+//Get Form
+function getForm() {
+    //get the DOM form
+    let form = document.querySelector(".cart__order__form");
+
+    //Create RegExp
+    let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
+    let addressRegExp = new RegExp("^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
+    let charRegEx = new RegExp("^[a-zA-Z ,.'-]+$");
+
+    //Change Name
+    form.firstName.addEventListener('change', function () {
+        validFirstName(this);
+    });
+    const validFirstName = function (inputFirstName) {
+        let firstNameErrorMsg = inputFirstName.nextElementSibling;
+
+        if (charRegExp.test(inputFirstName.value)) {
+            firstNameErrorMsg.innerHTML = '';
+        } else {
+            firstNameErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
+        }
+    };
+
+    //change Lastname
+    form.lastName.addEventListener('change', function () {
+        validLastName(this);
+    });
+
+    //change address
+    form.address.addEventListener('change', function () {
+        validAddress(this);
+    });
+
+    //change city
+    form.city.addEventListener('change', function () {
+        validCity(this);
+    });
+
+    //change mail
+    form.email.addEventListener('change', function () {
+        validEmail(this);
+    });
+
+}
+getForm();
+
+//Send the Form
+function postForm() {
+    const btn_commander = document.getElementById("order");
+
+    //Event on button
+    btn_commander.addEventListener("click", (event) => {
+
+        //get Info from Form
+        let inputName = document.getElementById("firstName");
+        let inputLastName = document.getElementById("lastName");
+        let inputAddress = document.getElementById("address");
+        let inputCity = document.getElementById("city");
+        let inputMail = document.getElementById("email");
+
+    })
+}
+postForm();
