@@ -110,3 +110,27 @@ function modifyQuantity() {
     }
 }
 modifyQuantity();
+
+//Delete product
+function deleteProduct() {
+    let btn_delete = document.querySelectorAll(".deleteItem");
+
+    for (let i = 0; i < btn_delete.length; i++) {
+        btn_delete[i].addEventListener("click", (event) => {
+            event.preventDefault();
+
+            //Selection de l'element à supprimer en fonction de son id ET sa couleur
+            let idDelete = productStorage[i].idProduit;
+            let colorDelete = productStorage[i].couleurProduit;
+
+            productStorage = productStorage.filter(el => el.idProduit !== idDelete || el.couleurProduit !== colorDelete);
+
+            localStorage.setItem("product", JSON.stringify(productStorage));
+
+            //Alerte when product is Deleted
+            alert("Ce produit a bien été supprimé du panier");
+            location.reload();
+        })
+    }
+}
+deleteProduct();
