@@ -70,7 +70,7 @@ function addToCart(product) {
     //Add Listener on Btn AddToCart
     btn_addToCart.addEventListener("click", (event) => {
         //Waiting to have at least 1 and between 0 to 100 object choose and color choose too
-        if (productChoice.value != 0 && productChoice.value <= 100) {
+        if (productChoice.value != 0 && productChoice.value <= 100 && colorChoice.value != 0) {
 
             let colorValue = colorChoice.value;
             let productQuantity = productChoice.value;

@@ -42,22 +42,6 @@ function checkCart() {
 }
 checkCart();
 
-//Edit Quantity for Product
-function modifyQuantity() {
-    let quantityItem = document.querySelectorAll(".itemQuantity");
-
-    for (let i = 0; i < quantityItem.length; i++) {
-        quantityItem[i].addEventListener("change", (event) => {
-
-            let quantity = productStorage[i].quantiteProduit;
-            let quantityItemValue = quantityItem.valueAsNumber;
-
-
-        })
-
-    }
-}
-
 //Get Total for Quantity and Price
 function allTotals() {
     //get Quantity
@@ -85,10 +69,9 @@ function allTotals() {
 }
 allTotals();
 
-
 //modify quantity
 function modifyQuantity() {
-    let modifQuantity = document.querySelectorAll(".itemQuantity");
+    let modifQuantity = document.getElementsByClassName('itemQuantity');
 
     for (let i = 0; i < modifQuantity.length; i++) {
         modifQuantity[i].addEventListener("change", (event) => {
@@ -97,7 +80,7 @@ function modifyQuantity() {
             let productModif = productStorage[i].quantiteProduit;
             let modifQuantityValue = modifQuantity[i].valueAsNumber;
 
-            const result = productStorage.find((el) => el.modifQuantityValue !== productModif);
+            const result = productStorage.find((el, index) => i == index);
 
             result.quantiteProduit = modifQuantityValue;
             productStorage[i].quantiteProduit = result.quantiteProduit;
