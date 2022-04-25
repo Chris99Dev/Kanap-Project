@@ -87,8 +87,7 @@ function modifyQuantity() {
 
             localStorage.setItem("product", JSON.stringify(productStorage));
 
-            //refresh Url
-            location.reload();
+            allTotals();
         })
     }
 }
@@ -112,6 +111,7 @@ function deleteProduct() {
 
             //Alerte when product is Deleted
             alert("Ce produit a bien été supprimé du panier");
+
             location.reload();
         })
     }
@@ -129,24 +129,31 @@ function getForm() {
     let addressRegExp = new RegExp("^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
     let charRegEx = new RegExp("^[a-zA-Z ,.'-]+$");
 
-    // function validInfo() {
-    //     //Create RegExp
-    //     let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
-    //     let addressRegExp = new RegExp("^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
-    //     let charRegEx = new RegExp("^[a-zA-Z ,.'-]+$");
-    //     let validErrorMsg = this.nextElementSibling;
-
-    //     if (charRegEx.test(this.value)) {
-    //         validErrorMsg.innerHTML = '';
-    //     } else {
-    //         validErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
-    //     }
-    // }
-
     //Change Name
     form.firstName.addEventListener('change', function () {
         validFirstName(this);
     });
+
+    //change Lastname
+    form.lastName.addEventListener('change', function () {
+        validLastName(this);
+    });
+
+    //change address
+    form.address.addEventListener('change', function () {
+        validAddress(this);
+    });
+
+    //change city
+    form.city.addEventListener('change', function () {
+        validCity(this);
+    });
+
+    //change mail
+    form.email.addEventListener('change', function () {
+        validEmail(this);
+    });
+
     //Valid the FirstName
     const validFirstName = function (inputFirstName) {
         let firstNameErrorMsg = inputFirstName.nextElementSibling;
@@ -158,10 +165,6 @@ function getForm() {
         }
     };
 
-    //change Lastname
-    form.lastName.addEventListener('change', function () {
-        validLastName(this);
-    });
     //Valid the LastName
     const validLastName = function (inputLastName) {
         let lastNameErrorMsg = inputLastName.nextElementSibling;
@@ -173,10 +176,6 @@ function getForm() {
         }
     };
 
-    //change address
-    form.address.addEventListener('change', function () {
-        validAddress(this);
-    });
     //Valid the Address
     const validAddress = function (inputAddress) {
         let addressErrorMsg = inputAddress.nextElementSibling;
@@ -188,10 +187,6 @@ function getForm() {
         }
     };
 
-    //change city
-    form.city.addEventListener('change', function () {
-        validCity(this);
-    });
     //Valid the City
     const validCity = function (inputCity) {
         let CityErrorMsg = inputCity.nextElementSibling;
@@ -203,10 +198,6 @@ function getForm() {
         }
     };
 
-    //change mail
-    form.email.addEventListener('change', function () {
-        validEmail(this);
-    });
     //Valid the Email
     const validEmail = function (inputMail) {
         let emailErrorMsg = inputMail.nextElementSibling;

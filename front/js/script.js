@@ -11,7 +11,6 @@ function fillCards() {
     let result = listProduit()
         .then(function (returnAPI) {
             const products = returnAPI;
-            console.table(products);
             for (let product in products) {
 
                 //Insert "a" into the product
