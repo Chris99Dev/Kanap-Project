@@ -1,13 +1,22 @@
 //Init LocalStorage
 let productStorage = JSON.parse(localStorage.getItem("product"));
-let cartValue = document.querySelector("#cart__items");
 
-console.table(productStorage);
+let cartValue = document.querySelector("#cart__items");
 
 //Checking the Cart
 function checkCart() {
     if (productStorage === null || productStorage == 0) {
         cartValue.innerHTML = "<p>Votre Panier est vide</p>";
+        let formShow = document.getElementsByClassName('cart__order__form');
+        let priceShow = document.getElementsByClassName('cart__price');
+        for (let i = 0; i < formShow.length; i++) {
+            formShow[i].style.display = "none";
+        }
+
+        for (let i = 0; i < priceShow.length; i++) {
+            priceShow[i].style.display = "none";
+        }
+
     } else {
         for (let product in productStorage) {
             let productArticle = document.createElement("product");
@@ -40,7 +49,6 @@ function checkCart() {
         }
     }
 }
-checkCart();
 
 //Get Total for Quantity and Price
 function allTotals() {
@@ -67,7 +75,6 @@ function allTotals() {
     //Show Total Price
     document.getElementById('totalPrice').innerHTML = totalPrice;
 }
-allTotals();
 
 //modify quantity
 function modifyQuantity() {
@@ -91,7 +98,6 @@ function modifyQuantity() {
         })
     }
 }
-modifyQuantity();
 
 //Delete product
 function deleteProduct() {
@@ -116,13 +122,12 @@ function deleteProduct() {
         })
     }
 }
-deleteProduct();
-
 
 //Get Form
 function getForm() {
     //get the DOM form
     let form = document.querySelector(".cart__order__form");
+    form.setAttribute("id", "form");
 
     //Create RegExp
     let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
@@ -133,22 +138,18 @@ function getForm() {
     form.firstName.addEventListener('change', function () {
         validFirstName(this);
     });
-
     //change Lastname
     form.lastName.addEventListener('change', function () {
         validLastName(this);
     });
-
     //change address
     form.address.addEventListener('change', function () {
         validAddress(this);
     });
-
     //change city
     form.city.addEventListener('change', function () {
         validCity(this);
     });
-
     //change mail
     form.email.addEventListener('change', function () {
         validEmail(this);
@@ -158,7 +159,7 @@ function getForm() {
     const validFirstName = function (inputFirstName) {
         let firstNameErrorMsg = inputFirstName.nextElementSibling;
 
-        if (charRegEx.test(inputFirstName.value)) {
+        if (charRegEx.test(inputFirstName.value) == true) {
             firstNameErrorMsg.innerHTML = '';
         } else {
             firstNameErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
@@ -169,7 +170,7 @@ function getForm() {
     const validLastName = function (inputLastName) {
         let lastNameErrorMsg = inputLastName.nextElementSibling;
 
-        if (charRegEx.test(inputLastName.value)) {
+        if (charRegEx.test(inputLastName.value) == true) {
             lastNameErrorMsg.innerHTML = '';
         } else {
             lastNameErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
@@ -180,7 +181,7 @@ function getForm() {
     const validAddress = function (inputAddress) {
         let addressErrorMsg = inputAddress.nextElementSibling;
 
-        if (addressRegExp.test(inputAddress.value)) {
+        if (addressRegExp.test(inputAddress.value) == true) {
             addressErrorMsg.innerHTML = '';
         } else {
             addressErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
@@ -191,7 +192,7 @@ function getForm() {
     const validCity = function (inputCity) {
         let CityErrorMsg = inputCity.nextElementSibling;
 
-        if (charRegEx.test(inputCity.value)) {
+        if (charRegEx.test(inputCity.value) == true) {
             CityErrorMsg.innerHTML = '';
         } else {
             CityErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
@@ -202,7 +203,7 @@ function getForm() {
     const validEmail = function (inputMail) {
         let emailErrorMsg = inputMail.nextElementSibling;
 
-        if (emailRegExp.test(inputMail.value)) {
+        if (emailRegExp.test(inputMail.value) == true) {
             emailErrorMsg.innerHTML = '';
         } else {
             emailErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
@@ -210,12 +211,18 @@ function getForm() {
     };
 
 }
-getForm();
+
 
 //Send the Form
 function postForm() {
     const btn_commander = document.getElementById("order");
-
+    let clientData = form.firstName.value + form.lastName.value + form.city.value + form.address.value + form.email.value;
+    if (clientData == 5) {
+        postForm();
+    } else {
+        console.log("DataMISSING");
+        btn_commander.display = false;
+    };
     //Event on button
     btn_commander.addEventListener("click", (event) => {
 
@@ -245,7 +252,7 @@ function postForm() {
         }
 
         const options = {
-            method: 'Post',
+            method: 'POST',
             body: JSON.stringify(order),
             headers: {
                 'Accept': 'application/json',
@@ -267,4 +274,10 @@ function postForm() {
             });
     })
 }
-postForm();
+
+
+checkCart();
+allTotals();
+modifyQuantity();
+deleteProduct();
+getForm();
